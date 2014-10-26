@@ -37,7 +37,11 @@ public class WikipediaFeedStreamTask implements StreamTask {
 
   @Override
   public void process(IncomingMessageEnvelope envelope, MessageCollector collector, TaskCoordinator coordinator) {
-    Map<String, Object> outgoingMap = WikipediaFeedEvent.toMap((WikipediaFeedEvent) envelope.getMessage());
-    collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, outgoingMap));
+
+    WikipediaFeedEvent event = (WikipediaFeedEvent) envelope.getMessage();
+    String source = event.getSource();
+
+    Map<String, Object> outgoingMap = WikipediaFeedEvent.toMap(event);
+    collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, source, outgoingMap));
   }
 }
