@@ -38,9 +38,3 @@ su vagrant -c "bin/grid bootstrap"
 su vagrant -c "/opt/apache/apache-maven-3.1.1/bin/mvn clean package"
 su vagrant -c "mkdir -p deploy/samza"
 su vagrant -c "tar -xf ./samza-job-package/target/samza-job-package-0.7.0-dist.tar.gz -C deploy/samza"
-su vagrant -c "deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://\$PWD/deploy/samza/config/wikipedia-feed.properties"
-sleep 60
-su vagrant -c "deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://\$PWD/deploy/samza/config/wikipedia-parser.properties"
-sleep 60
-su vagrant -c "deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://\$PWD/deploy/samza/config/wikipedia-stats.properties"
-sleep 60
