@@ -153,16 +153,25 @@ under the License.
     <repository>
       <id>apache-releases</id>
       <url>https://repository.apache.org/content/groups/public</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
     <repository>
       <id>scala-tools.org</id>
       <name>Scala-tools Maven2 Repository</name>
       <url>https://oss.sonatype.org/content/groups/scala-tools</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
     <!-- for zkclient -->
     <repository>
       <id>sonatype</id>
       <url>http://oss.sonatype.org/content/groups/public</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
   </repositories>
 
