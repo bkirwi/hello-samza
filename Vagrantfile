@@ -31,5 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--memory", "2048"]
     end
     samza.vm.provision "shell", path: "vagrant/bootstrap.sh", :args => "1"
+    config.vm.synced_folder "~/.m2", "/home/vagrant/.m2"
   end
 end
