@@ -1,4 +1,4 @@
-#!/bin/bash -x -e
+#!/bin/bash
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -e
+set -x
+
 apt-get -y update
 apt-get install -y software-properties-common python-software-properties
 add-apt-repository -y ppa:webupd8team/java
@@ -26,11 +29,15 @@ apt-get -y install git vim wget screen curl
 echo $'export JAVA_HOME=/usr\nexport PATH=/opt/apache/apache-maven-3.1.1/bin:$PATH' > /etc/profile.d/vagrant_samza.sh
 . /etc/profile.d/vagrant_samza.sh
 
-cd /tmp
-wget http://www.apache.org/dist/maven/binaries/apache-maven-3.1.1-bin.tar.gz
-mkdir -p /opt/apache
-cd /opt/apache/
-tar -xf /tmp/apache-maven-3.1.1-bin.tar.gz
+if [ -e "/opt/apache/apache-maven-3.1.1/bin/mvn" ]; then
+  echo "maven already installed"
+else
+  cd /tmp
+  wget http://www.apache.org/dist/maven/binaries/apache-maven-3.1.1-bin.tar.gz
+  mkdir -p /opt/apache
+  cd /opt/apache/
+  tar -xf /tmp/apache-maven-3.1.1-bin.tar.gz
+fi
 
 cd /vagrant
 su vagrant -c "bin/grid bootstrap"
