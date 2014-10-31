@@ -1,4 +1,4 @@
-hello-samza
+hello-samza (and coast!)
 ===========
 
 Hello Samza is a starter project for [Apache Samza](http://samza.incubator.apache.org/) (Incubating) jobs.
@@ -20,6 +20,43 @@ Hello Samza, for example:
 Hello Samza is developed as part of the Apache Samza project. Please direct questions, improvements and
 bug fixes there.  Questions about Hello Samza are welcome on the dev list (details on the main
 site above) and the Samza JIRA has a hello-samza component for filing tickets.
+
+### Running the Coast Jobs
+
+To compile this source, you'll need to make `coast` visible to maven. The
+project is already configured to publish to the local maven repo, so checking
+out that source and running `sbt publish` should do the trick.
+
+Coast's Samza integration works by generating config, so you'll need somewhere
+to put them:
+
+    mkdir -p conf/coast
+
+Both jobs expect their input in the `wikipedia-raw` topic, so run the existing
+`wikipedia-feed` job:
+
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/deploy/samza/config/wikipedia-feed.properties
+
+To run the wordcount job:
+
+    # This generates two config files, one for each job stage
+    deploy/samza/bin/run-class.sh samza.examples.coast.WikipediaWordCount deploy/samza/config/coast-base.properties conf/coast
+
+    # Both jobs should be deployed from config
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/conf/coast/wikipedia-wordcount-words.properties
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/conf/coast/wikipedia-wordcount.properties
+
+    # Output should quickly become visible in wikipedia-wordcount
+    deploy/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wikipedia-wordcount
+
+Likewise, to run the statistics-calculating job:
+
+    # This job only has a single stage
+    deploy/samza/bin/run-class.sh samza.examples.coast.WikipediaStats deploy/samza/config/coast-base.properties conf/coast
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/conf/coast/wikipedia-statistics.properties
+
+    # Events are buffered in small batches, but output should appear after a few seconds
+    deploy/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wikipedia-statistics
 
 ### Using Vagrant
 
