@@ -9,6 +9,12 @@ This also relies on the [Coast](https://github.com/bkirwi/coast) project; if you
 
 ### Running the Coast Jobs
 
+This repo has been updated with a couple example jobs for the `coast` streaming
+framework:
+
+- [WikipediaWordCount.scala](/samza-wikipedia/src/main/scala/samza/examples/coast/WikipediaWordCount.scala)
+- [WikipediaStats.scala](/samza-wikipedia/src/main/scala/samza/examples/coast/WikipediaStats.scala)
+
 To compile this source, you'll need to make `coast` visible to maven. The
 project is already configured to publish to the local maven repo, so checking
 out that source and running `sbt publish` should do the trick.
