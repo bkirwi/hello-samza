@@ -19,6 +19,8 @@ To compile this source, you'll need to make `coast` visible to maven. The
 project is already configured to publish to the local maven repo, so checking
 out that source and running `sbt publish` should do the trick.
 
+**NOTE**: This project is a little behind `coast`'s master branch. This should be fixed soon -- but in the meantime, you'll want to publish from the `samza` branch. 
+
 Coast's Samza integration works by generating config, so you'll need somewhere
 to put them:
 
