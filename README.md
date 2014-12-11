@@ -3,7 +3,7 @@ hello-samza (and coast!)
 
 Hello Samza is a starter project for [Apache Samza](http://samza.incubator.apache.org/) (Incubating) jobs.
 
-Please see [Hello Samza](http://samza.incubator.apache.org/startup/hello-samza/0.7.0/) to get started.
+Please see [Hello Samza](http://samza.incubator.apache.org/startup/hello-samza/0.8/) to get started.
 
 This also relies on the [Coast](https://github.com/bkirwi/coast) project; if you're trying this out, you'll want to check out that source as well.
 
@@ -18,8 +18,6 @@ framework:
 To compile this source, you'll need to make `coast` visible to maven. The
 project is already configured to publish to the local maven repo, so checking
 out that source and running `sbt publish` should do the trick.
-
-**NOTE**: This project is a little behind `coast`'s master branch. This should be fixed soon -- but in the meantime, you'll want to publish from the `samza` branch. 
 
 Coast's Samza integration works by generating config, so you'll need somewhere
 to put them:
