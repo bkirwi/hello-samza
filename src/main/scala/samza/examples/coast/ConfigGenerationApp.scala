@@ -21,6 +21,7 @@ import java.net.URI
 import java.util.Properties
 
 import com.monovore.coast
+import com.monovore.coast.model.Graph
 import org.apache.samza.config.factories.PropertiesConfigFactory
 
 import scala.collection.JavaConverters._
@@ -33,7 +34,7 @@ import scala.collection.JavaConverters._
  */
 trait ConfigGenerationApp {
 
-  def flow: coast.Flow[Unit]
+  def graph: Graph
 
   def main(args: Array[String]): Unit = {
 
@@ -44,10 +45,7 @@ trait ConfigGenerationApp {
 
     val baseConfig = configFactory.getConfig(baseConfigURI)
 
-    val configFiles = coast.samza.configureFlow(flow)(
-      system = "kafka",
-      baseConfig = baseConfig
-    )
+    val configFiles = coast.samza.Simple(baseConfig).configure(graph)
 
     configFiles.foreach { case (name, config) =>
 

@@ -17,12 +17,13 @@
 package samza.examples.coast
 
 import com.monovore.coast
+import com.monovore.coast.flow
 
 object Wikipedia {
 
-  val Edits = coast.Name[String, String]("wikipedia-raw")
+  val Edits = flow.Name[String, String]("wikipedia-raw")
 
-  val WordCount = coast.Name[String, String]("wikipedia-wordcount")
+  val WordCount = flow.Name[String, String]("wikipedia-wordcount")
 
-  val Statistics = coast.Name[String, String]("wikipedia-statistics")
+  val Statistics = flow.Name[String, String]("wikipedia-statistics")
 }

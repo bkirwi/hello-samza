@@ -17,7 +17,7 @@
 package samza.examples.coast
 
 import com.monovore.coast
-import com.monovore.coast.Flow
+import com.monovore.coast.flow
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
@@ -25,14 +25,14 @@ import scala.util.Try
 
 object WikipediaWordCount extends ConfigGenerationApp {
 
-  import coast.format.pretty._
+  import coast.wire.pretty._
 
-  override def flow: Flow[Unit] = for {
+  val graph = for {
 
   // split the edit summary up into words and regroup
-    counts <- coast.label("wikipedia-wordcount-words") {
+    counts <- flow.stream("wikipedia-wordcount-words") {
 
-      coast.source(Wikipedia.Edits)
+      flow.source(Wikipedia.Edits)
         .flatMap { json => Option(WikipediaFeedEvent.fromJson(json).getRawEvent).toSeq }
         .flatMap { event =>
           Try { WikipediaParserStreamTask.parse(event).get("summary").asInstanceOf[String] }
@@ -45,10 +45,10 @@ object WikipediaWordCount extends ConfigGenerationApp {
     }
 
     // sum up the counts for each word, and pretty-print
-    _ <- coast.sink(Wikipedia.WordCount) {
+    _ <- flow.sink(Wikipedia.WordCount) {
 
-      counts.fold(0) { _ + _ }
-        .stream
+      counts.sum
+        .updates
         .withKeys.map { k => v => s"$k: $v" }
     }
 

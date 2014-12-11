@@ -17,6 +17,7 @@
 package samza.examples.coast
 
 import com.monovore.coast
+import com.monovore.coast.flow
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
@@ -26,17 +27,17 @@ import scala.util.Try
 
 object WikipediaStats extends ConfigGenerationApp {
 
-  import coast.format.pretty._
+  import coast.wire.pretty._
 
   case class Stats(edits: Int = 0, bytesAdded: Int = 0, titles: Set[String] = Set.empty[String])
 
-  implicit val statsFormat = coast.format.javaSerialization.formatFor[(Stats, Int)]
+  implicit val statsFormat = coast.wire.javaSerialization[Seq[Stats]]
 
   // roll up stats across all events, like the existing parser / stats job
   // coast does not yet have clocks, so this windows by number of messages instead of time
-  override def flow: coast.Flow[Unit] = coast.sink(Wikipedia.Statistics) {
+  val graph = flow.sink(Wikipedia.Statistics) {
 
-    coast.source(Wikipedia.Edits)
+    flow.source(Wikipedia.Edits)
       .map { json => WikipediaFeedEvent.fromJson(json) }
       .map { event =>
 
@@ -51,14 +52,14 @@ object WikipediaStats extends ConfigGenerationApp {
           titles = Set(parsed.getOrElse("title", "<unknown>").asInstanceOf[String])
         )
       }
-      .windowed(size = 5)(Stats()) { (previous, next) =>
-
-          Stats(
-            edits = previous.edits + next.edits,
-            bytesAdded = previous.bytesAdded + next.bytesAdded,
-            titles = previous.titles ++ next.titles
-          )
-        }
+      .grouped(10)
+      .map { window =>
+        Stats(
+          edits = window.map { _.edits }.sum,
+          bytesAdded = window.map { _.bytesAdded }.sum,
+          titles = window.flatMap { _.titles }.toSet
+        )
+      }
       .map { stats =>
         s"edit window size: ${stats.edits}; total bytes: ${stats.bytesAdded}; unique titles: ${stats.titles.size}"
       }
