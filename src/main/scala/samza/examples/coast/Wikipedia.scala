@@ -16,7 +16,6 @@
 
 package samza.examples.coast
 
-import com.monovore.coast
 import com.monovore.coast.flow
 
 object Wikipedia {

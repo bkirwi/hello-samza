@@ -18,18 +18,20 @@ package samza.examples.coast
 
 import com.monovore.coast
 import com.monovore.coast.flow
+import com.monovore.coast.samza.ConfigGenerator
+import org.apache.samza.config.Config
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
 import scala.util.Try
 
-object WikipediaWordCount extends ConfigGenerationApp {
+object WikipediaWordCount extends ExampleApp(coast.samza.Safe) {
 
   import coast.wire.pretty._
 
   val graph = for {
 
-  // split the edit summary up into words and regroup
+    // split the edit summary up into words and regroup
     counts <- flow.stream("wikipedia-wordcount-words") {
 
       flow.source(Wikipedia.Edits)
@@ -44,7 +46,7 @@ object WikipediaWordCount extends ConfigGenerationApp {
         .groupByKey
     }
 
-    // sum up the counts for each word, and pretty-print
+    // sum up the counts for each word and pretty-print
     _ <- flow.sink(Wikipedia.WordCount) {
 
       counts.sum

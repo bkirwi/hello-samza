@@ -18,6 +18,8 @@ package samza.examples.coast
 
 import com.monovore.coast
 import com.monovore.coast.flow
+import com.monovore.coast.samza.ConfigGenerator
+import org.apache.samza.config.Config
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
@@ -25,7 +27,7 @@ import collection.JavaConverters._
 
 import scala.util.Try
 
-object WikipediaStats extends ConfigGenerationApp {
+object WikipediaStats extends ExampleApp(coast.samza.Simple) {
 
   import coast.wire.pretty._
 
