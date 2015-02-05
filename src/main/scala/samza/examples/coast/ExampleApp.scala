@@ -16,16 +16,15 @@
 
 package samza.examples.coast
 
-import java.io.{FileOutputStream, File}
+import java.io.{File, FileOutputStream}
 import java.net.URI
 import java.util.Properties
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import com.monovore.coast
-import com.monovore.coast.dot.Dot
 import com.monovore.coast.model.Graph
 import com.monovore.coast.samza.ConfigGenerator
+import com.monovore.coast.viz.Dot
 import org.apache.samza.config.Config
 import org.apache.samza.config.factories.PropertiesConfigFactory
 

@@ -17,9 +17,7 @@
 package samza.examples.coast
 
 import com.monovore.coast
-import com.monovore.coast.flow
-import com.monovore.coast.samza.ConfigGenerator
-import org.apache.samza.config.Config
+import com.monovore.coast.flow.Flow
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
@@ -37,9 +35,9 @@ object WikipediaStats extends ExampleApp(coast.samza.Simple) {
 
   // roll up stats across all events, like the existing parser / stats job
   // coast does not yet have clocks, so this windows by number of messages instead of time
-  val graph = flow.sink(Wikipedia.Statistics) {
+  val graph = Flow.sink(Wikipedia.Statistics) {
 
-    flow.source(Wikipedia.Edits)
+    Flow.source(Wikipedia.Edits)
       .map { json => WikipediaFeedEvent.fromJson(json) }
       .map { event =>
 
