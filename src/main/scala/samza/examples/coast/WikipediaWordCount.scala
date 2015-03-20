@@ -18,12 +18,13 @@ package samza.examples.coast
 
 import com.monovore.coast
 import com.monovore.coast.flow.Flow
+import com.monovore.coast.samza.SafeBackend
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
 import scala.util.Try
 
-object WikipediaWordCount extends ExampleApp(coast.samza.Safe) {
+object WikipediaWordCount extends ExampleApp(SafeBackend) {
 
   import coast.wire.pretty._
 
