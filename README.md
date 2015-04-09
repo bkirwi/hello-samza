@@ -14,8 +14,8 @@ are available in your local Maven repository.
 
 The new example jobs are here:
 
-- [WikipediaWordCount.scala](/samza-wikipedia/src/main/scala/samza/examples/coast/WikipediaWordCount.scala)
-- [WikipediaStats.scala](/samza-wikipedia/src/main/scala/samza/examples/coast/WikipediaStats.scala)
+- [WikipediaWordCount.scala](/src/main/scala/samza/examples/coast/WikipediaWordCount.scala)
+- [WikipediaStats.scala](/src/main/scala/samza/examples/coast/WikipediaStats.scala)
 
 Coast's Samza integration works by generating config, so you'll need somewhere
 to put them:
