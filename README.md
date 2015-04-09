@@ -5,19 +5,17 @@ Hello Samza is a starter project for [Apache Samza](http://samza.apache.org/) jo
 
 Please see [Hello Samza](http://samza.apache.org/startup/hello-samza/0.8/) to get started.
 
-This also relies on the [Coast](https://github.com/bkirwi/coast) project; if you're trying this out, you'll want to check out that source as well.
-
 ### Running the Coast Jobs
 
-This repo has been updated with a couple example jobs for the `coast` streaming
-framework:
+This project also includes examples for the [Coast](https://github.com/bkirwi/coast)
+project, a high-level streaming framework that compiles to Samza. To build this
+code, you'll want to check out that source and run `sbt publish`, so the jars
+are available in your local Maven repository.
+
+The new example jobs are here:
 
 - [WikipediaWordCount.scala](/samza-wikipedia/src/main/scala/samza/examples/coast/WikipediaWordCount.scala)
 - [WikipediaStats.scala](/samza-wikipedia/src/main/scala/samza/examples/coast/WikipediaStats.scala)
-
-To compile this source, you'll need to make `coast` visible to maven. The
-project is already configured to publish to the local maven repo, so checking
-out that source and running `sbt publish` should do the trick.
 
 Coast's Samza integration works by generating config, so you'll need somewhere
 to put them:
