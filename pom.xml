@@ -128,7 +128,7 @@ under the License.
   <properties>
     <!-- maven specific properties -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <samza.version>0.9.0-SNAPSHOT</samza.version>
+    <samza.version>0.9.0</samza.version>
   </properties>
 
   <developers>

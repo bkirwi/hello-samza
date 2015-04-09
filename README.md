@@ -50,19 +50,6 @@ Likewise, to run the statistics-calculating job:
     # Events are buffered in small batches, but output should appear after a few seconds
     deploy/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wikipedia-statistics
     
-### Custom Samza    
-
-By default, Hello Samza uses a recent release of Samza from a Maven repository. If you want to use a custom
-version of Samza, you can publish it to your local Maven repository in `$HOME/.m2` by running the following
-in the Samza repository:
-
-    ./gradlew publishToMavenLocal
-
-You can then use that version in Hello Samza by specifying the `samza.version` property when building
-Hello Samza, for example:
-
-    mvn package -Dsamza.version=0.8.0-SNAPSHOT
-
 ### Pull requests and questions
 
 [Hello Samza](http://samza.apache.org/startup/hello-samza/0.8/) is developed as part of the [Apache Samza](http://samza.apache.org) project. Please direct questions, improvements and bug fixes there.  Questions about [Hello Samza](http://samza.apache.org/startup/hello-samza/0.8/) are welcome on the [dev list](http://samza.apache.org/community/mailing-lists.html) and the [Samza JIRA](https://issues.apache.org/jira/browse/SAMZA) has a hello-samza component for filing tickets.
