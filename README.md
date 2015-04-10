@@ -20,7 +20,7 @@ The new example jobs are here:
 Coast's Samza integration works by generating config, so you'll need somewhere
 to put them:
 
-    mkdir -p conf/coast
+    mkdir -p target/config
 
 Both jobs expect their input in the `wikipedia-raw` topic, so run the existing
 `wikipedia-feed` job:
@@ -30,11 +30,11 @@ Both jobs expect their input in the `wikipedia-raw` topic, so run the existing
 To run the wordcount job:
 
     # This generates two config files, one for each job stage
-    deploy/samza/bin/run-class.sh samza.examples.coast.WikipediaWordCount deploy/samza/config/coast-base.properties conf/coast
+    deploy/samza/bin/run-class.sh samza.examples.coast.WikipediaWordCount gen-config deploy/samza/config/coast-base.properties target/config
 
     # Both jobs should be deployed from config
-    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/conf/coast/wikipedia-wordcount-words.properties
-    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/conf/coast/wikipedia-wordcount.properties
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/target/config/wikipedia-wordcount-words.properties
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/target/config/wikipedia-wordcount.properties
 
     # Output should quickly become visible in wikipedia-wordcount
     deploy/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wikipedia-wordcount
@@ -42,8 +42,8 @@ To run the wordcount job:
 Likewise, to run the statistics-calculating job:
 
     # This job only has a single stage
-    deploy/samza/bin/run-class.sh samza.examples.coast.WikipediaStats deploy/samza/config/coast-base.properties conf/coast
-    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/conf/coast/wikipedia-statistics.properties
+    deploy/samza/bin/run-class.sh samza.examples.coast.WikipediaStats gen-config deploy/samza/config/coast-base.properties target/config
+    deploy/samza/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PWD/target/config/wikipedia-statistics.properties
 
     # Events are buffered in small batches, but output should appear after a few seconds
     deploy/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wikipedia-statistics
