@@ -18,7 +18,8 @@ package samza.examples.coast
 
 import com.monovore.coast
 import com.monovore.coast.flow.Flow
-import com.monovore.coast.samza.SimpleBackend
+import com.monovore.coast.samza.{SamzaApp, SimpleBackend}
+import com.monovore.coast.wire.BinaryFormat
 import samza.examples.wikipedia.system.WikipediaFeed.WikipediaFeedEvent
 import samza.examples.wikipedia.task.WikipediaParserStreamTask
 
@@ -26,13 +27,13 @@ import collection.JavaConverters._
 
 import scala.util.Try
 
-object WikipediaStats extends ExampleApp(SimpleBackend) {
+object WikipediaStats extends SamzaApp(SimpleBackend) {
 
   import coast.wire.pretty._
 
   case class Stats(edits: Int = 0, bytesAdded: Int = 0, titles: Set[String] = Set.empty[String])
 
-  implicit val statsFormat = coast.wire.javaSerialization[Seq[Stats]]
+  implicit val statsFormat = BinaryFormat.javaSerialization[Seq[Stats]]
 
   // roll up stats across all events, like the existing parser / stats job
   // coast does not yet have clocks, so this windows by number of messages instead of time
