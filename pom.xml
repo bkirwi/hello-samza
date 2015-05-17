@@ -114,9 +114,9 @@ under the License.
       <version>18.0</version>
     </dependency>
     <dependency>
-      <groupId>com.monovore.coast</groupId>
+      <groupId>com.monovore</groupId>
       <artifactId>coast-samza_2.10</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.scala-lang</groupId>
@@ -162,6 +162,10 @@ under the License.
     <repository>
       <id>my-local-repo</id>
       <url>file://${user.home}/.m2/repository</url>
+    </repository>
+    <repository>
+      <id>bintray-coast</id>
+      <url>https://dl.bintray.com/bkirwi/maven</url>
     </repository>
     <repository>
       <id>apache-releases</id>
