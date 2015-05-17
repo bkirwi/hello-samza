@@ -28,6 +28,11 @@ The `coast` jobs are started with `run-class.sh`:
 To have a look at the output, you can use the standard console consumer:
 
     deploy/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic wikipedia-wordcount
+
+More useful commands, options, and other information 
+live on [`coast`'s wiki page for Samza][coast-samza].
+
+[coast-samza]: https://github.com/bkirwi/coast/wiki/Samza
     
 ### Pull requests and questions
 
